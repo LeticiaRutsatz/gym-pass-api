@@ -1,10 +1,9 @@
 import {FastifyRequest, FastifyReply} from 'fastify';
-import { prisma } from '@/lib';
-import { hash } from 'bcryptjs';
 import { z } from 'zod';
 import { RegisterService } from '@/services/register.service';
 import { UsersRepository } from '@/repositories/users.repository';
-import { UserAlreadyExistsError } from '@/services/errors/user-already-exists-error';
+import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists-error'; 
+import { makeRegisterService } from '@/utils/factories/make-register-service';
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {
   const requiredBody = z.object({
@@ -15,8 +14,12 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
 
   const { name, email, password } = requiredBody.parse(request.body);
   try{
-    const usersRepository = new UsersRepository();
-    const registerService = new RegisterService(usersRepository);
+
+    const registerService = makeRegisterService();
+    
+    //or could be
+    // const usersRepository = new UsersRepository();
+    // const registerService = new RegisterService(usersRepository);
 
     await registerService.execute({
       name, 

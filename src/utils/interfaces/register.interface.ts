@@ -5,6 +5,6 @@ export interface RegisterServiceInterface{
     password: string
 }
 
-export interface RegisterUseCaseResponse {
+export interface RegisterServiceResponse {
     user: User
-  }
+}

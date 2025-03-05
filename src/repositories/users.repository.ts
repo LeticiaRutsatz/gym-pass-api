@@ -1,6 +1,6 @@
 import { prisma } from '@/lib' 
 import { Prisma } from '@prisma/client'
-import { UsersRepositoryInterface } from '@/interfaces/usersRepository.interface';
+import { UsersRepositoryInterface } from '@/utils/interfaces/usersRepository.interface';
 
 export class UsersRepository implements UsersRepositoryInterface { //implements interface to set what methods the repository must have
   async create(data: Prisma.UserCreateInput) {

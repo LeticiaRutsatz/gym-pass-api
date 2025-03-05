@@ -1,7 +1,7 @@
-import { RegisterServiceInterface, RegisterUseCaseResponse } from '@/interfaces/register.interface';
-import { UsersRepositoryInterface } from '@/interfaces/usersRepository.interface';
+import { RegisterServiceInterface, RegisterServiceResponse } from '@/utils/interfaces/register.interface';
+import { UsersRepositoryInterface } from '@/utils/interfaces/usersRepository.interface';
+import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists-error';
 import { hash } from 'bcryptjs';
-import { UserAlreadyExistsError } from './errors/user-already-exists-error';
 
 // Dependencie Inversion
 // In this code, Dependency Inversion is implemented by allowing the 
@@ -23,7 +23,7 @@ export class RegisterService {
         name, 
         email, 
         password 
-    }: RegisterServiceInterface) : Promise<RegisterUseCaseResponse> {
+    }: RegisterServiceInterface) : Promise<RegisterServiceResponse> {
         const password_hash = await hash(password, 6);
 
         const userWithSameEmail = await this.usersRepository.findByEmail(email);
