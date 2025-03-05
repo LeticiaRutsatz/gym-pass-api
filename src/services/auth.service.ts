@@ -1,4 +1,4 @@
-import { InvalidCredentials } from '@/utils/errors/invalid-credentials';
+import { InvalidCredentials } from '@/utils/errors/invalid-credentials.error';
 import { AuthServiceInterface, AuthServiceResponse } from '@/utils/interfaces/auth.interface';
 import { UsersRepositoryInterface } from '@/utils/interfaces/usersRepository.interface';
 import { compare } from 'bcryptjs';
