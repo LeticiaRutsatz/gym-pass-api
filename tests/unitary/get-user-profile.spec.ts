@@ -1,8 +1,8 @@
 import { hash } from 'bcryptjs'
 import { expect, describe, it, beforeEach} from 'vitest'
-import { InMemoryUsersRepository } from '@/repositories/in-memory-users-repository'
 import { GetUserProfileService } from '@/services/get-user-profile.service'
 import { ResourceNotFound } from '@/utils/errors/resource-not-found.error'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 
 let usersRepository: InMemoryUsersRepository
 let sut: GetUserProfileService
@@ -29,7 +29,7 @@ describe('Get user profile Use Case', () => {
   })
 
   it('should not be able to get user profile with wrong id', async () => {
-    expect(() =>
+    await expect(() =>
       sut.execute({
         userId: 'non-existing-id',
       }),
