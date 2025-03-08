@@ -2,7 +2,7 @@ import {FastifyRequest, FastifyReply} from 'fastify';
 import { z } from 'zod';
 import { RegisterService } from '@/services/register.service';
 import { UsersRepository } from '@/repositories/users.repository';
-import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists-error'; 
+import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists.error'; 
 import { makeRegisterService } from '@/utils/factories/make-register-service';
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {

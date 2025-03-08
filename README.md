@@ -35,3 +35,7 @@ GymPass style app.
 "test": "vitest run", //testa
 "test:watch": "vitest", //testa e fica olhando alterações
 "test:coverage": "vitest run --coverage" //verifica % de testes realizados (abrindo index.html da pasta covarage podemos ver vizualmente)
+
+docker compose up -d //criar docker
+docker start api-solid-pg //inicia o docker
+docker stop api-solid-pg //para o docker

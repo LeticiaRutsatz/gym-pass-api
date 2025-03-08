@@ -1,6 +1,6 @@
 import { RegisterServiceInterface, RegisterServiceResponse } from '@/utils/interfaces/register.interface';
 import { UsersRepositoryInterface } from '@/utils/interfaces/usersRepository.interface';
-import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists-error';
+import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists.error';
 import { hash } from 'bcryptjs';
 
 // Dependencie Inversion

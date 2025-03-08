@@ -3,13 +3,21 @@ import { Gym, Prisma, User } from '@prisma/client'
 import { GymsRepositoryInterface } from '@/utils/interfaces/gyms.interface';
 
 export class GymsRepository implements GymsRepositoryInterface {
-  findById(id: string): Promise<Gym | null> {
-      const gym = prisma.gym.findUnique({
-        where: {
-          id,
-        },
-      })
+  create(data: Prisma.GymCreateInput): Promise<Gym> {
+    const gym = prisma.gym.create({
+      data
+    })
 
-      return gym
+    return gym
+  }
+
+  findById(id: string): Promise<Gym | null> {
+    const gym = prisma.gym.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return gym
   }
 }

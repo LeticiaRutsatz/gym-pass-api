@@ -1,14 +1,14 @@
 import { CheckIn, Prisma } from '@prisma/client'
 
 export interface CheckInServiceInterface {
-    userId: string,
-    gymId: string,
-    userLatitude: number,
-    userLongitude: number
+  userId: string,
+  gymId: string,
+  userLatitude: number,
+  userLongitude: number
 }
 
 export interface CheckInServiceResponse {
-    checkIn: CheckIn
+  checkIn: CheckIn
 }
 
 export interface CheckInRepositoryInterface {
