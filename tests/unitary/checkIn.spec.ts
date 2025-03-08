@@ -149,4 +149,22 @@ describe('Authenticate Use Case', () => {
       expect.objectContaining({ gym_id: 'gym-22' }),
     ])
   })
+
+  it('should be able to get check-ins count from metrics', async () => {
+    await checkInRepository.create({
+      gym_id: 'gym-01',
+      user_id: 'user-01',
+    })
+
+    await checkInRepository.create({
+      gym_id: 'gym-02',
+      user_id: 'user-01',
+    })
+
+    const { checkInsCount } = await sut.getNumberOfCheckings({
+      userId: 'user-01',
+    })
+
+    expect(checkInsCount).toEqual(2)
+  })
 })

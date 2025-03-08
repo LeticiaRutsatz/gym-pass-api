@@ -32,4 +32,14 @@ export class CheckInRepository implements CheckInRepositoryInterface {
 
     return checkIns.slice((page - 1) * 20, page * 20);
   }
+
+  async countByUserId(userId: string): Promise<number> {
+    const numberOfCheckIns = await prisma.checkIn.count({
+      where: {
+        user_id: userId
+      }
+    })
+
+    return numberOfCheckIns
+  }
 }
