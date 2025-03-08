@@ -2,6 +2,8 @@ import { RegisterServiceInterface, RegisterServiceResponse } from '@/utils/inter
 import { UsersRepositoryInterface } from '@/utils/interfaces/usersRepository.interface';
 import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists.error';
 import { hash } from 'bcryptjs';
+import { GetUserProfileServiceInterface, GetUserProfileServiceResponse } from '@/utils/interfaces/get-user-profile.interface';
+import { ResourceNotFound } from '@/utils/errors/resource-not-found.error';
 
 // Dependencie Inversion
 // In this code, Dependency Inversion is implemented by allowing the 
@@ -12,14 +14,14 @@ import { hash } from 'bcryptjs';
 // on an abstraction (`usersRepository`), which could be any repository 
 // implementation that conforms to the expected contract
 
-export class RegisterService {
+export class UserService {
     private usersRepository: UsersRepositoryInterface ;
 
     constructor(usersRepository: UsersRepositoryInterface){
         this.usersRepository = usersRepository
     }
 
-    async execute({
+    async createUser({
         name, 
         email, 
         password 
@@ -37,6 +39,18 @@ export class RegisterService {
             email,
             password_hash,
         })
+
+        return {
+            user,
+        }
+    }
+
+    async getUserProfile({userId}: GetUserProfileServiceInterface) : Promise<GetUserProfileServiceResponse> {
+        const user = await this.usersRepository.findById(userId);
+
+        if (!user) {
+            throw new ResourceNotFound()
+        }
 
         return {
             user,

@@ -118,7 +118,7 @@ describe('Authenticate Use Case', () => {
       user_id: 'user-01',
     })
 
-    const { checkIns } = await sut.history({
+    const { checkIns } = await sut.searchCheckInHistory({
       userId: 'user-01',
       page: 1,
     })
@@ -138,7 +138,7 @@ describe('Authenticate Use Case', () => {
       })
     }
 
-    const { checkIns } = await sut.history({
+    const { checkIns } = await sut.searchCheckInHistory({
       userId: 'user-01',
       page: 2,
     })

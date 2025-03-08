@@ -7,7 +7,28 @@ export class GymService {
         this.gymsRepository = gymsRepository
     }
 
-    async execute({
+    async createGym({
+        title, 
+        description, 
+        phone,
+        latitude,
+        longitude,
+    }: GymsServiceInterface) : Promise<GymsServiceResponse> {
+
+        const gym = await this.gymsRepository.create({
+            title,
+            description,
+            phone,
+            latitude,
+            longitude,
+        })
+
+        return {
+            gym,
+        }
+    }
+
+    async searchGyms({
         title, 
         description, 
         phone,

@@ -52,7 +52,7 @@ export class CheckInService{
         }
     }
 
-    async history({userId, page} : CheckInServiceHistoryInterface) : Promise<CheckInServiceHistoryResponse>{
+    async searchCheckInHistory({userId, page} : CheckInServiceHistoryInterface) : Promise<CheckInServiceHistoryResponse>{
         const checkIns = await this.checkInRepository.findManyByUserId(
             userId,
             page,
