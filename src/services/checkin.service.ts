@@ -3,7 +3,7 @@ import { MaxDistanceError } from '@/utils/errors/max-distance.error';
 import { MaxNumberOfCheckInsError } from '@/utils/errors/max-numbers-of-check-ins.error';
 import { ResourceNotFound } from '@/utils/errors/resource-not-found.error';
 import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordenates';
-import { CheckInRepositoryInterface, CheckInServiceInterface, CheckInServiceResponse } from '@/utils/interfaces/checkin.interface';
+import { CheckInRepositoryInterface, CheckInServiceHistoryInterface, CheckInServiceHistoryResponse, CheckInServiceInterface, CheckInServiceResponse } from '@/utils/interfaces/checkin.interface';
 import { GymsRepositoryInterface } from '@/utils/interfaces/gyms.interface';
 
 export class CheckInService{
@@ -50,6 +50,17 @@ export class CheckInService{
 
         return {
             checkIn,
+        }
+    }
+
+    async history({userId, page} : CheckInServiceHistoryInterface) : Promise<CheckInServiceHistoryResponse>{
+        const checkIns = await this.checkInRepository.findManyByUserId(
+            userId,
+            page,
+        )
+      
+        return {
+            checkIns,
         }
     }
 }

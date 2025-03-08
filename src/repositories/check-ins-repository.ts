@@ -1,5 +1,5 @@
 import { prisma } from '@/lib' 
-import { Prisma, User } from '@prisma/client'
+import { CheckIn, Prisma, User } from '@prisma/client'
 import { CheckInRepositoryInterface } from '@/utils/interfaces/checkin.interface';
 
 export class CheckInRepository implements CheckInRepositoryInterface {
@@ -21,5 +21,15 @@ export class CheckInRepository implements CheckInRepositoryInterface {
     })
 
     return checkIn
+  }
+
+  async findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
+    const checkIns = await prisma.checkIn.findMany({
+      where: {
+        user_id: userId
+      }
+    })
+
+    return checkIns.slice((page - 1) * 20, page * 20);
   }
 }
