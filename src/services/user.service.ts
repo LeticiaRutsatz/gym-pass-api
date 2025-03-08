@@ -1,8 +1,6 @@
-import { RegisterServiceInterface, RegisterServiceResponse } from '@/utils/interfaces/register.interface';
-import { UsersRepositoryInterface } from '@/utils/interfaces/usersRepository.interface';
+import { GetUserProfileServiceInterface, GetUserProfileServiceResponse, UserServiceInterface, UserServiceResponse, UsersRepositoryInterface } from '@/utils/interfaces/user.interface';
 import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists.error';
 import { hash } from 'bcryptjs';
-import { GetUserProfileServiceInterface, GetUserProfileServiceResponse } from '@/utils/interfaces/get-user-profile.interface';
 import { ResourceNotFound } from '@/utils/errors/resource-not-found.error';
 
 // Dependencie Inversion
@@ -25,7 +23,7 @@ export class UserService {
         name, 
         email, 
         password 
-    }: RegisterServiceInterface) : Promise<RegisterServiceResponse> {
+    }: UserServiceInterface) : Promise<UserServiceResponse> {
         const password_hash = await hash(password, 6);
 
         const userWithSameEmail = await this.usersRepository.findByEmail(email);

@@ -12,7 +12,7 @@ let checkInRepository: InMemoryCheckInRepository
 let gymsRepository: InMemoryGymsRepository
 let sut: CheckInService
 
-describe('Authenticate Use Case', () => {
+describe('CheckIn Use Case', () => {
   beforeEach(async () => {
     checkInRepository = new InMemoryCheckInRepository()
     gymsRepository = new InMemoryGymsRepository()

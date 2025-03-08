@@ -1,4 +1,4 @@
-import { GymsRepositoryInterface, GymsServiceInterface, GymsServiceResponse } from '@/utils/interfaces/gyms.interface';
+import { GymsRepositoryInterface, GymsServiceInterface, GymsServiceResponse, GymsServiceSearchInterface, GymsServiceSearchResponse } from '@/utils/interfaces/gyms.interface';
 
 export class GymService {
     private gymsRepository: GymsRepositoryInterface;
@@ -29,23 +29,13 @@ export class GymService {
     }
 
     async searchGyms({
-        title, 
-        description, 
-        phone,
-        latitude,
-        longitude,
-    }: GymsServiceInterface) : Promise<GymsServiceResponse> {
-
-        const gym = await this.gymsRepository.create({
-            title,
-            description,
-            phone,
-            latitude,
-            longitude,
-        })
-
+        query,
+        page,
+      }: GymsServiceSearchInterface): Promise<GymsServiceSearchResponse> {
+        const gyms = await this.gymsRepository.searchMany(query, page)
+    
         return {
-            gym,
+          gyms,
         }
     }
 }

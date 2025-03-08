@@ -20,4 +20,16 @@ export class GymsRepository implements GymsRepositoryInterface {
 
     return gym
   }
+
+  async searchMany(query: string, page: number): Promise<Gym[]> {
+    const gym = await prisma.gym.findMany({
+      where: {
+        title: {
+          contains: query,
+        },
+      },
+    })
+
+    return gym.slice((page - 1) * 20, page * 20);
+  }
 }

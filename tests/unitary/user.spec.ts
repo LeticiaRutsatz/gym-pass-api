@@ -8,7 +8,7 @@ import { ResourceNotFound } from '@/utils/errors/resource-not-found.error'
 let usersRepository: InMemoryUsersRepository
 let sut: UserService
 
-describe('Register Use Case', () => {
+describe('User Use Case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
     sut = new UserService(usersRepository)
