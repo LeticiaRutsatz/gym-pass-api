@@ -1,6 +1,6 @@
 # GymPass Style App
 
-Um aplicativo estilo GymPass que permite aos usuários se cadastrarem, realizar check-ins em academias próximas, gerenciar seu histórico de check-ins e muito mais. Este projeto foi desenvolvido com foco em boas práticas de desenvolvimento, como SOLID, e utiliza tecnologias modernas para garantir escalabilidade e manutenibilidade.
+Um Sistema estilo GymPass que permite aos usuários se cadastrarem, realizar check-ins em academias próximas, gerenciar seu histórico de check-ins e muito mais. Este projeto foi desenvolvido com foco em boas práticas de desenvolvimento, como SOLID, e utiliza tecnologias modernas para garantir escalabilidade e manutenibilidade.
 
 ---
 
