@@ -1,5 +1,3 @@
-import { UsersRepository } from '@/repositories/users.repository';
-import { AuthService } from '@/services/auth.service';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 import { InvalidCredentials } from '@/utils/errors/invalid-credentials.error'; 

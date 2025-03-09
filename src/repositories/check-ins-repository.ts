@@ -42,4 +42,26 @@ export class CheckInRepository implements CheckInRepositoryInterface {
 
     return numberOfCheckIns
   }
+
+  async findById(id: string){
+    const checkIn = await prisma.checkIn.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return checkIn;
+  }
+
+  async save(checkIn: CheckIn){
+    const checkInUpdated = await prisma.checkIn.update({
+      where: {
+        id: checkIn.id,
+      },
+      data: checkIn,
+    })
+    
+    return checkInUpdated;
+  }
+
 }

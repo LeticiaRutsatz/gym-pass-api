@@ -4,6 +4,7 @@ import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-
 import { CheckInService } from '@/services/checkin.service'
 import { MaxDistanceError } from '@/utils/errors/max-distance.error'
 import { MaxNumberOfCheckInsError } from '@/utils/errors/max-numbers-of-check-ins.error'
+import { ResourceNotFound } from '@/utils/errors/resource-not-found.error'
 import { Decimal } from '@prisma/client/runtime/library'
 import { expect, describe, it, beforeEach, afterEach, vi } from 'vitest'
 
@@ -166,5 +167,31 @@ describe('CheckIn Use Case', () => {
     })
 
     expect(checkInsCount).toEqual(2)
+  })
+
+  it('should be able to validate the check-in', async () => {
+    vi.useRealTimers();
+
+    const createdCheckIn = await checkInRepository.create({
+      gym_id: 'gym-01',
+      user_id: 'user-01',
+    })
+
+    const { checkIn } = await sut.validateCheckIn({
+      checkInId: createdCheckIn.id,
+    })
+
+    expect(checkIn.validated_at).toEqual(expect.any(Date))
+    expect(checkInRepository.items[0].validated_at).toEqual(expect.any(Date))
+  })
+
+  it('should not be able to validate an inexistent check-in', async () => {
+    vi.useRealTimers();
+
+    await expect(() =>
+      sut.validateCheckIn({
+        checkInId: 'inexistent-check-in-id',
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFound)
   })
 })

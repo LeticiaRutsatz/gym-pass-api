@@ -1,18 +1,18 @@
 import { prisma } from '@/lib' 
 import { Gym, Prisma, User } from '@prisma/client'
-import { GymsRepositoryInterface } from '@/utils/interfaces/gyms.interface';
+import { FindManyNearbyParams, GymsRepositoryInterface, GymsServiceSearchNearlyInterface } from '@/utils/interfaces/gyms.interface';
 
 export class GymsRepository implements GymsRepositoryInterface {
-  create(data: Prisma.GymCreateInput): Promise<Gym> {
-    const gym = prisma.gym.create({
+  async create(data: Prisma.GymCreateInput): Promise<Gym> {
+    const gym = await prisma.gym.create({
       data
     })
 
     return gym
   }
 
-  findById(id: string): Promise<Gym | null> {
-    const gym = prisma.gym.findUnique({
+  async findById(id: string): Promise<Gym | null> {
+    const gym = await prisma.gym.findUnique({
       where: {
         id,
       },
@@ -32,4 +32,8 @@ export class GymsRepository implements GymsRepositoryInterface {
 
     return gym.slice((page - 1) * 20, page * 20);
   }
+
+  //TO DO
+  // async findManyNearby(params: FindManyNearbyParams): Promise<Gym[]> {
+  // }
 }

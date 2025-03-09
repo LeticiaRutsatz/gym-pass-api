@@ -21,9 +21,17 @@ export interface CheckInServiceNumberInterface {
 export interface CheckInServiceNumberResponse {
   checkInsCount: number
 }
+export interface CheckInServiceValidateRequest {
+  checkInId: string
+}
+export interface CheckInServiceValidateResponse {
+  checkIn: CheckIn
+}
 export interface CheckInRepositoryInterface {
   create(data: Prisma.CheckInUncheckedCreateInput): Promise<CheckIn> //CheckInUncheckedCreateInput to put fileds of relationship (userId, gymId)
   findByUserIdAndDate(userId: string, date: Date): Promise<CheckIn | null>
   findManyByUserId(userId: string, page: number): Promise<CheckIn[]>
   countByUserId(userId: string): Promise<number>
+  save(checkIn: CheckIn): Promise<CheckIn>
+  findById(id: string): Promise<CheckIn | null>
 }

@@ -2,7 +2,7 @@ import { MaxDistanceError } from '@/utils/errors/max-distance.error';
 import { MaxNumberOfCheckInsError } from '@/utils/errors/max-numbers-of-check-ins.error';
 import { ResourceNotFound } from '@/utils/errors/resource-not-found.error';
 import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordenates';
-import { CheckInRepositoryInterface, CheckInServiceHistoryInterface, CheckInServiceHistoryResponse, CheckInServiceInterface, CheckInServiceNumberInterface, CheckInServiceNumberResponse, CheckInServiceResponse } from '@/utils/interfaces/checkin.interface';
+import { CheckInRepositoryInterface, CheckInServiceHistoryInterface, CheckInServiceHistoryResponse, CheckInServiceInterface, CheckInServiceNumberInterface, CheckInServiceNumberResponse, CheckInServiceResponse, CheckInServiceValidateRequest, CheckInServiceValidateResponse } from '@/utils/interfaces/checkin.interface';
 import { GymsRepositoryInterface } from '@/utils/interfaces/gyms.interface';
 
 export class CheckInService{
@@ -69,5 +69,21 @@ export class CheckInService{
         return {
           checkInsCount,
         }
-      }
+    }
+
+    async validateCheckIn({checkInId} : CheckInServiceValidateRequest): Promise<CheckInServiceValidateResponse>{
+        const checkIn = await this.checkInRepository.findById(checkInId)
+
+        if (!checkIn) {
+            throw new ResourceNotFound()
+        }
+
+        checkIn.validated_at = new Date()
+
+        await this.checkInRepository.save(checkIn)
+
+        return {
+            checkIn,
+        }
+    }
 }

@@ -1,4 +1,4 @@
-import { GymsRepositoryInterface, GymsServiceInterface, GymsServiceResponse, GymsServiceSearchInterface, GymsServiceSearchResponse } from '@/utils/interfaces/gyms.interface';
+import { GymsRepositoryInterface, GymsServiceInterface, GymsServiceResponse, GymsServiceSearchInterface, GymsServiceSearchNearlyInterface, GymsServiceSearchResponse } from '@/utils/interfaces/gyms.interface';
 
 export class GymService {
     private gymsRepository: GymsRepositoryInterface;
@@ -36,6 +36,17 @@ export class GymService {
     
         return {
           gyms,
+        }
+    }
+
+    async fetchNerabyGyms({userLatitude, userLongitude} : GymsServiceSearchNearlyInterface): Promise<GymsServiceSearchResponse>{
+        const gyms = await this.gymsRepository.findManyNearby({
+            latitude: userLatitude,
+            longitude: userLongitude,
+        })
+      
+        return {
+            gyms,
         }
     }
 }

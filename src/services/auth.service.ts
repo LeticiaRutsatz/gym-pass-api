@@ -1,10 +1,10 @@
 import { InvalidCredentials } from '@/utils/errors/invalid-credentials.error';
 import { AuthServiceInterface, AuthServiceResponse } from '@/utils/interfaces/auth.interface';
-import { UsersRepositoryInterface } from '@/utils/interfaces/usersRepository.interface';
+import { UsersRepositoryInterface } from '@/utils/interfaces/user.interface';
 import { compare } from 'bcryptjs';
 
 export class AuthService{
-    private usersRepository: UsersRepositoryInterface ;
+    private usersRepository: UsersRepositoryInterface;
     
     constructor(usersRepository: UsersRepositoryInterface){
         this.usersRepository = usersRepository
