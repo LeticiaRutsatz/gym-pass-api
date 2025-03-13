@@ -5,8 +5,8 @@ import { AuthService } from '@/services/auth.service'
 // and facilitate service calls in the controller
 
 export function makeAuthService() {
-  const usersRepository = new UsersRepository()
-  const authService = new AuthService(usersRepository)
+  const usersRepository = new UsersRepository();
+  const service = new AuthService(usersRepository);
 
-  return authService
+  return service
 }
