@@ -17,12 +17,18 @@ export async function auth(request: FastifyRequest, reply: FastifyReply){
         // const usersRepository = new UsersRepository();
         // const authService = new AuthService(usersRepository);
 
-        await authService.execute({
+        const { user } = await authService.execute({
             email,
             password
         });
 
-        return reply.status(201).send();
+        const token = await reply.jwtSign({}, {
+            sign: {
+                sub: user.id, //never use private information about the user
+            }
+        }) //create token
+
+        return reply.status(201).send({token});
     }catch(err){
         if (err instanceof InvalidCredentials) {
             return reply.status(409).send({ message: err.message })

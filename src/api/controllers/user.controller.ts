@@ -36,5 +36,7 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
 }
 
 export async function profile(request: FastifyRequest, reply: FastifyReply) {
-  return reply.status(200).send()
+  await request.jwtVerify(); //verify if the token was created by this application
+
+  return reply.status(200).send();
 }
