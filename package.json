@@ -8,8 +8,11 @@
     "start": "node build/server.js",
     "start:build": "tsup src --out-dir build",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:unitary": "vitest run --dir tests/unitary",
+    "test:watch": "vitest -dir tests/unitary",
+    "test:e2e": "vitest run --dir tests/end-to-end",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "keywords": [],
   "author": "",
