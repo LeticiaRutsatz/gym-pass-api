@@ -36,7 +36,16 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
 }
 
 export async function profile(request: FastifyRequest, reply: FastifyReply) {
-  await request.jwtVerify(); //verify if the token was created by this application
+  const getUserProfile = makeUserService()
 
-  return reply.status(200).send();
+  const { user } = await getUserProfile.getUserProfile({
+    userId: request.user.sub,
+  })
+
+  return reply.status(200).send({
+    user: {
+      ...user,
+      password_hash: undefined,
+    },
+  })
 }
