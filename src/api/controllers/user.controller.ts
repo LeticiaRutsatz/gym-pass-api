@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { UserAlreadyExistsError } from '@/utils/errors/user-already-exists.error'; 
 import { makeUserService } from '@/utils/factories/make-user-service';
 
-export async function register(request: FastifyRequest, reply: FastifyReply) {
+export async function createUser(request: FastifyRequest, reply: FastifyReply) {
   const requiredBody = z.object({
     name: z.string().min(3).max(50),
     email: z.string().email(),
@@ -33,4 +33,8 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
 
     throw err;
   }
+}
+
+export async function profile(request: FastifyRequest, reply: FastifyReply) {
+  return reply.status(200).send()
 }
