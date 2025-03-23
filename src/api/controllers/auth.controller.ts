@@ -22,18 +22,28 @@ export async function auth(request: FastifyRequest, reply: FastifyReply){
             password
         });
 
-        const token = await reply.jwtSign({}, {
-            sign: {
-                sub: user.id, //never use private information about the user
+        const token = await reply.jwtSign(
+            {
+                role: user.role,
+            }, 
+            {
+                sign: {
+                    sub: user.id, //never use private information about the user
+                }
             }
-        }) //create token
+        ) //create token
 
-        const refreshToken = await reply.jwtSign({}, {
-            sign: {
-                sub: user.id,
-                expiresIn: '7d' //before this tame the user needs to login again
+        const refreshToken = await reply.jwtSign(
+            {
+                role: user.role,
+            }, 
+            {
+                sign: {
+                    sub: user.id,
+                    expiresIn: '7d' //before this tame the user needs to login again
+                }
             }
-        }) 
+        ) 
 
         return reply
             .setCookie('refreshToken', refreshToken, {
@@ -59,19 +69,26 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply){
 
     await request.jwtVerify({ onlyCookie: true}); //look to cookies to se if exist refresh token
 
+    const { role } = request.user;
 
-    const token = await reply.jwtSign({}, {
-        sign: {
-            sub: request.user.sub, //never use private information about the user
+    const token = await reply.jwtSign(
+        { role },
+        {
+            sign: {
+                sub: request.user.sub, //never use private information about the user
+            }
         }
-    }) //create token
+    ) //create token
 
-    const refreshToken = await reply.jwtSign({}, {
-        sign: {
-            sub: request.user.sub,
-            expiresIn: '7d' //before this tame the user needs to login again
+    const refreshToken = await reply.jwtSign(
+        { role }, 
+        {
+            sign: {
+                sub: request.user.sub,
+                expiresIn: '7d' //before this tame the user needs to login again
+            }
         }
-    }) 
+    ) 
 
     return reply
         .setCookie('refreshToken', refreshToken, {

@@ -13,7 +13,8 @@
     "test:e2e": "vitest run --dir tests/end-to-end",
     "test:e2e:watch": "vitest --dir tests/end-to-end",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "migrate:dev": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
