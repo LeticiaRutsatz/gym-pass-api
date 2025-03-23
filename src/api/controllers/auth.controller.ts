@@ -28,7 +28,24 @@ export async function auth(request: FastifyRequest, reply: FastifyReply){
             }
         }) //create token
 
-        return reply.status(201).send({token});
+        const refreshToken = await reply.jwtSign({}, {
+            sign: {
+                sub: user.id,
+                expiresIn: '7d' //before this tame the user needs to login again
+            }
+        }) 
+
+        return reply
+            .setCookie('refreshToken', refreshToken, {
+                path: '/', //wich route can read this value
+                secure: true,
+                sameSite: true,
+                httpOnly: true,
+            })
+            .status(200)
+            .send({
+                token,
+            });
     }catch(err){
         if (err instanceof InvalidCredentials) {
             return reply.status(409).send({ message: err.message })
@@ -36,4 +53,36 @@ export async function auth(request: FastifyRequest, reply: FastifyReply){
         
         throw err;
     }
+}
+
+export async function refresh(request: FastifyRequest, reply: FastifyReply){
+
+    await request.jwtVerify({ onlyCookie: true}); //look to cookies to se if exist refresh token
+
+
+    const token = await reply.jwtSign({}, {
+        sign: {
+            sub: request.user.sub, //never use private information about the user
+        }
+    }) //create token
+
+    const refreshToken = await reply.jwtSign({}, {
+        sign: {
+            sub: request.user.sub,
+            expiresIn: '7d' //before this tame the user needs to login again
+        }
+    }) 
+
+    return reply
+        .setCookie('refreshToken', refreshToken, {
+            path: '/', //wich route can read this value
+            secure: true,
+            sameSite: true,
+            httpOnly: true,
+        })
+        .status(200)
+        .send({
+            token,
+        });
+
 }

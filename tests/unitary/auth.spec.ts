@@ -56,4 +56,5 @@ describe('Authenticate Use Case', () => {
       }),
     ).rejects.toBeInstanceOf(InvalidCredentials)
   })
+  
 })
