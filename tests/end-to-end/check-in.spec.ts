@@ -14,7 +14,7 @@ describe('Create Check-in (e2e)', () => {
   })
 
   it('should be able to create a check-in', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true, 'leticia2@test.com')
 
     const gym = await prisma.gym.create({
       data: {
@@ -36,19 +36,19 @@ describe('Create Check-in (e2e)', () => {
   })
 
   it('should be able to get the total count of check-ins', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true, 'leticia3@test.com');
 
     const user = await prisma.user.findFirstOrThrow()
 
     const gym = await prisma.gym.create({
       data: {
-        title: 'JavaScript Gym',
+        title: 'Go Gym',
         latitude: -27.2092052,
         longitude: -49.6401091,
       },
     })
 
-    await prisma.checkIn.createMany({
+    const prismaReturn = await prisma.checkIn.createMany({
       data: [
         {
           gym_id: gym.id,
@@ -65,19 +65,19 @@ describe('Create Check-in (e2e)', () => {
       .get('/check-ins/metrics')
       .set('Authorization', `Bearer ${token}`)
       .send()
-
+    
     expect(response.statusCode).toEqual(200)
     expect(response.body.checkInsCount).toEqual(2)
   })
 
   it('should be able to validate a check-in', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true, 'leticia4@test.com')
 
     const user = await prisma.user.findFirstOrThrow()
 
     const gym = await prisma.gym.create({
       data: {
-        title: 'JavaScript Gym',
+        title: 'Java Gym',
         latitude: -27.2092052,
         longitude: -49.6401091,
       },
